@@ -100,7 +100,6 @@
 
 
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
-  <link href="<%- config.root %>favicon.ico" rel="icon" type="image/x-ico">
 
 
 
@@ -282,8 +281,6 @@
           </a>
         </li>
       
-
-     
     </ul>
   
 
@@ -317,161 +314,108 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-<a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
-    function c() {
-        var e = document.createElement("link");
-        e.setAttribute("type", "text/css");
-        e.setAttribute("rel", "stylesheet");
-        e.setAttribute("href", f);
-        e.setAttribute("class", l);
-        document.body.appendChild(e)
-    }
 
-    function h() {
-        var e = document.getElementsByClassName(l);
-        for (var t = 0; t < e.length; t++) {
-                    document.body.removeChild(e[t])
-        }
-    }
+  <section id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        welfare
+        <small>分类</small>
+      </h2>
+    </div>
 
-    function p() {
-        var e = document.createElement("div");
-        e.setAttribute("class", a);
-        document.body.appendChild(e);
-        setTimeout(function() {
-            document.body.removeChild(e)
-        }, 100)
-    }
+    
+      
 
-    function d(e) {
-        return {
-            height : e.offsetHeight,
-            width : e.offsetWidth
-        }
-    }
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-    function v(i) {
-        var s = d(i);
-        return s.height > e && s.height < n && s.width > t && s.width < r
-    }
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2016/08/10/【2016更新】通过host文件，让你的Google跑起来/" itemprop="url">
+              
+                <span itemprop="name">【2016更新】通过host文件，让你的Google跑起来</span>
+              
+            </a>
+        
+      </h1>
 
-    function m(e) {
-        var t = e;
-        var n = 0;
-        while (!!t) {
-            n += t.offsetTop;
-            t = t.offsetParent
-        }
-        return n
-    }
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2016-08-10T23:37:46+08:00"
+              content="Aug 10 2016" >
+          08-10
+        </time>
+      </div>
 
-    function g() {
-        var e = document.documentElement;
-        if (!!window.innerWidth) {
-            return window.innerHeight
-        } else if (e && !isNaN(e.clientHeight)) {
-                    return e.clientHeight
-        }
-        return 0
-    }
+    </header>
+  </article>
 
-    function y() {
-        if (window.pageYOffset) {
-            return window.pageYOffset
-        }
-        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
-    }
 
-    function E(e) {
-        var t = m(e);
-        return t >= w && t <= b + w
-    }
+    
+      
 
-    function S() {
-        var e = document.createElement("audio");
-        e.setAttribute("class", l);
-        e.src = i;
-        e.loop = false;
-        e.addEventListener("canplay", function() {
-            setTimeout(function() {
-                x(k)
-            }, 500);
-            setTimeout(function() {
-                N();
-                p();
-                for (var e = 0; e < O.length; e++) {
-                    T(O[e])
-                }
-            }, 15500)
-        }, true);
-        e.addEventListener("ended", function() {
-            N();
-            h()
-        }, true);
-        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
-                document.body.appendChild(e);
-        e.play()
-    }
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-    function x(e) {
-        e.className += " " + s + " " + o
-    }
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2016/07/31/【学生必看】下半年有哪些含金量高的全国性科技竞赛/" itemprop="url">
+              
+                <span itemprop="name">【学生必看】下半年有哪些含金量高的全国性科技竞赛</span>
+              
+            </a>
+        
+      </h1>
 
-    function T(e) {
-        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
-    }
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2016-07-31T23:22:35+08:00"
+              content="Jul 31 2016" >
+          07-31
+        </time>
+      </div>
 
-    function N() {
-        var e = document.getElementsByClassName(s);
-        var t = new RegExp("\\b" + s + "\\b");
-        for (var n = 0; n < e.length; ) {
-            e[n].className = e[n].className.replace(t, "")
-        }
-    }
+    </header>
+  </article>
 
-    var e = 30;
-    var t = 30;
-    var n = 350;
-    var r = 350;
-    var i = "//7xuupy.com1.z0.glb.clouddn.com/tongxingSibel%20-%20Im%20Sorry.mp3";
-    var s = "mw-harlem_shake_me";
-    var o = "im_first";
-    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
-    var a = "mw-strobe_light";
-    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
-    var l = "mw_added_css";
-    var b = g();
-    var w = y();
-    var C = document.getElementsByTagName("*");
-    var k = null;
-    for (var L = 0; L < C.length; L++) {
-        var A = C[L];
-        if (v(A)) {
-            if (E(A)) {
-                k = A;
-                break
-                          }
-        }
-    }
-    if (A === null) {
-        console.warn("Could not find a node of the right size. Please try a different page.");
-        return
-    }
-    c();
-    S();
-    var O = [];
-    for (var L = 0; L < C.length; L++) {
-        var A = C[L];
-        if (v(A)) {
-            O.push(A)
-        }
-    }
-    })()    '>一个萌萌的彩蛋</a> 
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2016/07/31/计算机专业学生福利-各个公司的学生优惠活动/" itemprop="url">
+              
+                <span itemprop="name">【计算机专业学生福利】各个公司的学生优惠活动</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2016-07-31T00:16:52+08:00"
+              content="Jul 31 2016" >
+          07-31
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+  </section>
+
+  
+
 
 
           </div>
           
- 
 
 
           
@@ -595,11 +539,11 @@
             <ul class="links-of-blogroll-list">
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://stormzhang.com/" target="_blank" rel="external nofollow">StormZhang</a>
+                  <a href="http://stormzhang.com/" title="StormZhang" target="_blank">StormZhang</a>
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://monniya.com/" target="_blank" rel="external nofollow">Monniya</a>
+                  <a href="http://monniya.com/" title="Monniya" target="_blank">Monniya</a>
                 </li>
               
             </ul>
@@ -620,15 +564,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-本站总访问量 <span id="busuanzi_value_site_pv"></span> &nbsp&nbsp&nbsp
-您是第<span id="busuanzi_value_site_uv"></span>个来到的小伙伴
-
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-
-<div class="copyright" >
+        <div class="copyright" >
   
   &copy; 
   <span itemprop="copyrightYear">2016</span>
@@ -638,28 +574,16 @@
   <span class="author" itemprop="copyrightHolder">Yodes Yang</span>
 </div>
 
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
 
-
-
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-
-
-
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
 
         
 
