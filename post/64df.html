@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lobster Two:300,300italic,400,400italic,700,700italicConsolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+  <link rel="manifest" href="/images/manifest.json">
+
+
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+<script>
+    (function(){
+        if(''){
+          var passwdArray = ''.split("|");
+          var userAnswer = prompt('');
+          if (passwdArray.indexOf(userAnswer) == -1){
+              alert('答案错误！');
+              history.back();
+          }
+        }
+    })();
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本文翻译自The Java 8 Stream API Tutorial">
+<meta name="keywords" content="翻译,Java8 新特性,Java Stream">
+<meta property="og:type" content="article">
+<meta property="og:title" content="翻译 | Java8 Stream API 教程">
+<meta property="og:url" content="http://blog.yodes.cn/post/64df.html">
+<meta property="og:site_name" content="Your Codes">
+<meta property="og:description" content="本文翻译自The Java 8 Stream API Tutorial">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img.blog.yodes.cn/18-3-9/93798267.jpg?imageView2/1/w/700/h/450/interlace/0/q/100">
+<meta property="og:updated_time" content="2018-10-20T08:46:31.002Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="翻译 | Java8 Stream API 教程">
+<meta name="twitter:description" content="本文翻译自The Java 8 Stream API Tutorial">
+<meta name="twitter:image" content="https://img.blog.yodes.cn/18-3-9/93798267.jpg?imageView2/1/w/700/h/450/interlace/0/q/100">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Your Codes" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://blog.yodes.cn/post/64df.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>翻译 | Java8 Stream API 教程 | Your Codes</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Your Codes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Follow your Heart, Fly your Foot</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-reading">
+    <a href="/reading/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-book"></i> <br>阅读</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-envelope"></i> <br>留言</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.yodes.cn/post/64df.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yodes Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Your Codes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">翻译 | Java8 Stream API 教程
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-08 15:19:05" itemprop="dateCreated datePublished" datetime="2018-03-08T15:19:05+08:00">2018-03-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-20 16:46:31" itemprop="dateModified" datetime="2018-10-20T16:46:31+08:00">2018-10-20</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/Java8-特性/" itemprop="url" rel="index"><span itemprop="name">Java8 特性</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/64df.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count gitment-comments-count" data-xid="/post/64df.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://img.blog.yodes.cn/18-3-9/93798267.jpg?imageView2/1/w/700/h/450/interlace/0/q/100" alt="Java8之Stream"></p>
+<blockquote>
+<p>本文翻译自<a href="http://www.baeldung.com/java-8-streams" target="_blank" rel="noopener">The Java 8 Stream API Tutorial</a></p>
+</blockquote>
+<a id="more"></a>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>&emsp;&emsp;本教程志在细致入微、深入底层，你将体验从Stream的创建开始（creation）到并行执行（parallel execution）的完整过程，以此体会Stream API的实际用处。</p>
+<p>&emsp;&emsp;为了理解下面的文章，读者需要掌握Java 7基础知识（Lambda表达式、Optional、方法引用）以及熟悉Stream API，如果你并不熟悉它们甚至一无所知，建议你先阅读我们之前的文章-<a href="http://www.baeldung.com/java-8-new-features" target="_blank" rel="noopener">Java8 新特性</a> 以及 <a href="http://www.baeldung.com/java-8-streams-introduction" target="_blank" rel="noopener">Java 8 Streams 介绍</a>。</p>
+<h1 id="创建Stream"><a href="#创建Stream" class="headerlink" title="创建Stream"></a>创建Stream</h1><p>&emsp;&emsp;创建一个Stream实例有多种方式，每种创建方式对应Stream的一个来源。但单个Stream实例每次创建之后，其来源将无法修改，这意味着Stream实例具备源头不可变性，不过我们却可以从单个源创建多个Stream实例。</p>
+<h2 id="Empty-Stream-空Stream"><a href="#Empty-Stream-空Stream" class="headerlink" title="Empty Stream - 空Stream"></a>Empty Stream - 空Stream</h2><p>&emsp;&emsp;方法empty()被用于创建一个Empty Stream：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; streamEmpty  = Stream.empty;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;上述代码段创建的Empty Stream通常被用于避免null对象或零元素对象的streams（streams with no element）返回结果为null：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public Stream&lt;String&gt; streamOf(List&lt;String&gt; list)&#123;</span><br><span class="line">  return lsit == null || list.isEmpty() ? Stream.empty() : list.streams();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Stream-of-Collection-集合Steram"><a href="#Stream-of-Collection-集合Steram" class="headerlink" title="Stream of Collection - 集合Steram"></a>Stream of Collection - 集合Steram</h2><p>&emsp;&emsp;我们可以创建任意Collection接口衍生类（Collection-&gt;List、Set、Queue）的Streams：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Collections&lt;String&gt; collection = Arrays.asList(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;);</span><br><span class="line">Stream&lt;Stirng&gt; streamOfCollection = collection.stream();</span><br></pre></td></tr></table></figure></p>
+<h2 id="Stream-of-Array-数组Stream"><a href="#Stream-of-Array-数组Stream" class="headerlink" title="Stream of Array - 数组Stream"></a>Stream of Array - 数组Stream</h2><p>&emsp;&emsp;接下来的这段代码展示的是数组Stream：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; streamOfArray = Stream.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;当然我们可以先创建熟悉的数组类型，再以它为源创建Stream，而且我们可以选择Stream中包含的元素数量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String[] arr = new String[]&#123;&quot;a&quot;, &quot;b&quot;, &quot;c&quot;&#125;;</span><br><span class="line">Stream&lt;String&gt; streamOfArrayFull = Arrays.stream(arr);</span><br><span class="line">Stream&lt;String&gt; streamOfArrayPart = Arrays.stream(arr, 1, 3);</span><br></pre></td></tr></table></figure></p>
+<h2 id="Stream-builder-构建器"><a href="#Stream-builder-构建器" class="headerlink" title="Stream.builder() - 构建器"></a>Stream.builder() - 构建器</h2><p>&emsp;&emsp;当builder被用于指定参数类型时，应被额外标识在声明右侧，否则方法build()将创建一个Stream(Object)实例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; streamBuilder = Stream.&lt;String&gt;builder().add(&quot;a&quot;).add(&quot;b&quot;).add(&quot;c&quot;).build();</span><br></pre></td></tr></table></figure></p>
+<h2 id="Stream-generator-生成器"><a href="#Stream-generator-生成器" class="headerlink" title="Stream.generator() - 生成器"></a>Stream.generator() - 生成器</h2><p>&emsp;&emsp;方法generator()接受一个供应器Supplier<t>用于元素生成。由于生产流(resulting stream)被定义之后属于无限流（即无止境地不断生产），开发者必须指定stream拥有流的目标大小，否则方法generator()将持续生产直到jvm内存到达顶值（memory limit）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; streamOfGenerated = Stream.generate( () -&gt; &quot;element&quot;).limit(10);</span><br></pre></td></tr></table></figure></t></p>
+<p>&emsp;&emsp;上述代码将创建十个内容为“element”的生成流。</p>
+<h2 id="Stream-iterate-迭代器"><a href="#Stream-iterate-迭代器" class="headerlink" title="Stream.iterate() - 迭代器"></a>Stream.iterate() - 迭代器</h2><p>&emsp;&emsp;另一种创建无限流的方法是通过调用方法iterate()，同样的它也需要使用方法limit()对目标流的元素大小进行限制：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;Integer&gt; streamItreated = Stream.iterate(40, n -&gt; n + 2).limit(20);</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;迭代流即采用迭代的方法作为元素生产方式，类似于高中数学中的f(x)，f(f(x))，etc。上述例子中，生成流的第一个元素是迭代器iterate()中的第一个元素40，从第二个元素开始的每个新元素都与上个元素有关，在此例中，生成流中的元素为：40、42、44、…78、80。</p>
+<h2 id="Stream-of-Primitives-基元流"><a href="#Stream-of-Primitives-基元流" class="headerlink" title="Stream of Primitives - 基元流"></a>Stream of Primitives - 基元流</h2><p>&emsp;&emsp;Java8提供了创建三大基础数据类型（int、long、double）stream的方式。由于Stream<t>是一个类接口，我们无法采用泛型传参的方式声明基础数据类型的stream，因此三个特殊的接口就被创造出来了：IntStream、LongStream、DoubleStream。<br>使用它们能够避免不必要的自动装箱<sup>1</sup>以提高生产效率。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IntStream intStream = IntStream.range(1, 3);</span><br><span class="line">LongStream longStream = LongStream.rangeClosed(1, 3);</span><br></pre></td></tr></table></figure></t></p>
+<p>&emsp;&emsp;方法range(int startInclusive, int endInclusive)创建了一个有序流（从startInclusive到endInclusive）。它使后面的值每个增加1，但却不包括最后一个参数，即此方法的结果是具备上限的。方法rangeClosed(int startInclusive, int endInclusive)与range()大致相同，但它却包含了最后一个值。<br>这两个方法用于生成三大基本数据类型的stream。</p>
+<p>&emsp;&emsp;此外，Java8之后，类<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html" target="_blank" rel="noopener">Random</a>也提供了拓展方法用于生成基础数据类型的stream。例如，下述代码创建了一个含有三个随机值的DoubleStream：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random random = new Random();</span><br><span class="line">DoubleStream doubleStream = random.doubles(3);</span><br></pre></td></tr></table></figure></p>
+<h2 id="Stream-of-String-字符串流"><a href="#Stream-of-String-字符串流" class="headerlink" title="Stream of String - 字符串流"></a>Stream of String - 字符串流</h2><p>&emsp;&emsp;String类型也可以作为生成stream的源，这得益于方法chars()的帮助，此外由于JDK中没有CharStream接口，IntStream也被用来表示字符流（stream of chars）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IntStream streamOfChars = &quot;abc&quot;.chars();</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;下例中通过特征的正则表达式将一个字符串割裂成（break into）其子串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; streamOfString = </span><br><span class="line">  Pattern.compile(&quot;, &quot;).spitAsStream(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="Stream-of-File-文件流"><a href="#Stream-of-File-文件流" class="headerlink" title="Stream of File - 文件流"></a>Stream of File - 文件流</h2><p>&emsp;&emsp;Java NIO<sup>2</sup>类文件允许通过方法lines()生成文本文件的Stream<string>。文本的每一行都会变成stream的一个元素：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Path path = Paths.get(&quot;C:\\file.txt&quot;);</span><br><span class="line">Stream&lt;String&gt; streamOfString = Files.lines(path);</span><br><span class="line">Stream&lt;String&gt; streamWithCharset = Files.lines(path, Charset.forName(&quot;utf-8&quot;));</span><br></pre></td></tr></table></figure></string></p>
+<p>ps：在方法lines()中也可以通过Charset设置文件编码。</p>
+<h1 id="Referencing-a-Stream-引用stream"><a href="#Referencing-a-Stream-引用stream" class="headerlink" title="Referencing a Stream - 引用stream"></a>Referencing a Stream - 引用stream</h1><p>&emsp;&emsp;只要调用生成操作（中间操作）就会实例化一个stream并生成一个可获取的引用，但执行终端操作会使得stream无法访问。为了证明这一点，我们不妨先忘记它，毕竟实践是检验真理的唯一标准。<br>以下代码如果不考虑冗长的话将是有效的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; stream = Stream.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;).filter(element -&gt; element.contains(&quot;b&quot;));</span><br><span class="line">Optional&lt;String&gt; anyElement = stream.findAny();</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;但是倘若我们在执行终端操作后重新使用相同的引用，则会不可避免的触发IllegalStateException。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;String&gt; firstElement = stream.findFirst();</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;IllegalStateException是一个运行时异常（RuntimeException），即编译器将不会提示此错误。因此必须记得，<strong>JAVA8 不允许重复使用stream</strong><br>这一设计是合乎逻辑的，因为stream从设计上旨在提供一个将有限操作（指函数体中元素的相关操作）的序列，而不是存储元素。<br>因此想让以前的代码正常工作我们得先改一改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; elements =</span><br><span class="line">  Stream.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;).filter(element -&gt; element.contains(&quot;b&quot;))</span><br><span class="line">    .collect(Collectors.toList());</span><br><span class="line">Optional&lt;String&gt; anyElement = elements.stream().findAny();</span><br><span class="line">Optional&lt;String&gt; firstElement = elements.stream().findFirst();</span><br></pre></td></tr></table></figure></p>
+<h1 id="Stream-Pipeline-流的管道"><a href="#Stream-Pipeline-流的管道" class="headerlink" title="Stream Pipeline - 流的管道"></a>Stream Pipeline - 流的管道</h1><p>&emsp;&emsp;想要执行源数据集的操作集并聚合它们，你需要以下三个部分——源（Source)、中间操作（Intermediate operations）和终结操作（terminal operation）。<br>中间操作返回的是一个新的可操作stream。举个例子，为了在一个包含少量元素Stream的基础之上新建Stream，我们可以调用方法skip()：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; oneModifiedStream = Stream.of(&quot;abcd&quot;, &quot;bbcd&quot;, &quot;cbcd&quot;).skip(1);</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;如果需要多次修改，则可以采用多次中间操作。假如我们还需要将Stream<string>中每个字符串替换为其子串subString(0, 3)，则可以使用skip()和map()相连的方式完成：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; twiceModifiedStream = stream.skip(1).map(element -&gt; element.subString(0, 3));</span><br></pre></td></tr></table></figure></string></p>
+<p>&emsp;&emsp;正如你所见，上例中map()使用Lambda表达式作为其参数对stream中的各元素进行处理。<br>stream本身是毫无价值的，编程人员最感兴趣的其实是终结操作（terminal operation），它可以是一个元素也可以是一个行为。只有在终结操作里才能对每个stream进行使用。正确的且最方便的stream操作方式就是Stream Pipeline，即stream源-&gt;中间操作-&gt;终结操作。如例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(&quot;abc1&quot;, &quot;abc2&quot;, &quot;abc3&quot;);</span><br><span class="line">long size = list.stream().skip(1)</span><br><span class="line">  .map(element -&gt; element.substring(0, 3)).sorted().count();</span><br></pre></td></tr></table></figure></p>
+<h1 id="Lazy-Invocation-懒式调用"><a href="#Lazy-Invocation-懒式调用" class="headerlink" title="Lazy Invocation - 懒式调用"></a>Lazy Invocation - 懒式调用</h1><p>&emsp;&emsp;中间操作是懒式调用的，这意味着只有在终结操作需要它们的时候中间操作才会被唤醒。<br>为了证明这个事实，假象我们有个方法wasCalled()，每当它被唤醒时使内部变量counter自增。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private long counter;</span><br><span class="line">private void wasCalled() &#123;</span><br><span class="line">  counter++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;接下来让我们在filter()操作中唤起wasCalled():<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(“abc1”, “abc2”, “abc3”);</span><br><span class="line">counter = 0;</span><br><span class="line">Stream&lt;String&gt; stream = list.stream().filter(element -&gt; &#123;</span><br><span class="line">    wasCalled();</span><br><span class="line">    return element.contains(&quot;2&quot;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;由于有三个变量，想象中filter()中的代码块将被执行三次，wasCalled()执行三次之后counter的值应为3，但是执行之后counter并未发生改变，仍然为0，也就是说filter()一次也没有被唤醒，这个原因就是缺失了终结操作（terminal operation）。<br>那接下来我们不妨再上述代码的基础之上添加一次map()操作和一个终结操作——findFirst()，并采用打日志的方式帮助我们了解方法调用时机及顺序。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;String&gt; stream = list.stream().filter( element -&gt; &#123;</span><br><span class="line">    log.info(&quot;filter() was called!&quot;);</span><br><span class="line">    return element.contains(&quot;2&quot;);</span><br><span class="line">  &#125;).map(element -&gt; &#123;</span><br><span class="line">    log.info(&quot;map() was called!&quot;);</span><br><span class="line">    return element.toUpperCase();</span><br><span class="line">  &#125;).findFirst();</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;日志结果显示filter()被唤醒了两次，而map()仅仅被调用一次，这是由于管道流是垂直执行的。在此例中第一个元素不满足filter()的要求，因此filter()被调用第二次以查找合适的结果，通过之后即进行map()操作，此时就没有第三次机会执行filter()操作了。findFirst()就能找出源数据集中第一个含有“2”的字符串的全大写字符串了。因此，懒调用使得不必相继调用两个中间操作（filter()和map()）才能完成任务了。</p>
+<h1 id="Order-of-Execution-执行顺序"><a href="#Order-of-Execution-执行顺序" class="headerlink" title="Order of Execution - 执行顺序"></a>Order of Execution - 执行顺序</h1><p>&emsp;&emsp;从性能的角度考虑，正确的执行顺序是采用上文提到的流式管道（Stream Pipeline）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">long size = list.stream().map(element -&gt; &#123;</span><br><span class="line">    wasCalled();</span><br><span class="line">    return element.substring(0, 3);</span><br><span class="line">&#125;).skip(2).count();</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;执行这段代码将使counter自增长3次，这意味着stream的方法map()将被调用3次，但最终size的值为1。这意味着结果流（resulting stream）中仅仅只有一个元素，毫无疑问在三次消息处理中程序跳过了两次处理。<br>如果我们改变skip()和map()的执行顺序，counter将只自增长一次。也即是map()只被调用一次：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">long size = list.stream().skip(2).map(element -&gt; &#123;</span><br><span class="line">    wasCalled();</span><br><span class="line">    return element.substring(0, 3);</span><br><span class="line">&#125;).count();</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;以上示例告诉我们一个规则：用于减少流中元素数量的中间操作，应当放置在处理操作之前。因此，保证在你的Stream Pipeline规则中按照这样的顺序编码：<strong>skip() –&gt; filter() –&gt; distinct()</strong></p>
+<h1 id="Stream-Reduction-流的聚合"><a href="#Stream-Reduction-流的聚合" class="headerlink" title="Stream Reduction - 流的聚合"></a>Stream Reduction - 流的聚合</h1><p>&emsp;&emsp;API提供了大量的终端操作用以聚合一个stream为一种数据类型或变量。比如：count()、max()、min()、sum()，但是这些方法都是预定义的。但如果用户需要自定义一个stream的聚合操作呢？官方提供了两个方法用以实现此类需求：reduce() 和 collect()。</p>
+<h2 id="reduce-方法"><a href="#reduce-方法" class="headerlink" title="reduce()方法"></a>reduce()方法</h2><p>&emsp;&emsp;此方法提供了三种变种，不同之处是它们的签名以及返回类型。reduce()方法具有下列参数：<br><em>identify（标识器）</em> - 累积器的初始值或当stream为空时的默认值。<br><em>accumulator（累积器）</em> - 提供设定聚合元素之逻辑的功能，每次规约(reducing)累积器都会创建一个新的值，新值的大小等于stream的大小，并且只有上一个值是可用的。这非常有助于提升性能。<br><em>combiner（组合器）</em> - 提供聚合accumulator（累积器）中元素的功能，combiner是唯一一个能从不同线程以并行模式聚合累积器中结果的方法。<br>好，让我们来实战一下吧：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OptionalInt reduced =</span><br><span class="line">    IntStream.range(1, 4).reduce((a, b) -&gt; a + b);</span><br></pre></td></tr></table></figure></p>
+<p>reduced = 6 = 1 + 2 + 3。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int reducedTwoParams =</span><br><span class="line">    IntStream.range(1, 4).reduce(10, (a, b) -&gt; a + b);</span><br></pre></td></tr></table></figure></p>
+<p>reducedTwoParams = 16 = 10 + 1 + 2 + 3。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int reducedParams = Stream.of(1, 2, 3)</span><br><span class="line">  .reduce(10, (a, b) -&gt; a + b, (a, b) -&gt; &#123;</span><br><span class="line">     log.info(&quot;combiner was called&quot;);</span><br><span class="line">     return a + b;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;这一结果与上文中的16一样，并且不会打出日志，因为combiner没有被唤起。为了唤醒combiner，stream应当是并行的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int reducedParallel = Arrays.asList(1, 2, 3).parallelStream()</span><br><span class="line">    .reduce(10, (a, b) -&gt; a + b, (a, b) -&gt; &#123;</span><br><span class="line">       log.info(&quot;combiner was called&quot;);</span><br><span class="line">       return a + b;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;此时，结果变为36，并且combiner被唤起了两次。规约（reduce）运转的算法为：每当stream中的元素通过identify（标识器）时accumulator（累积器）均被调用，最终累积器调用了3次。上述行为是并行完成的，因此造成了（10+1=11; 10+2=12; 10+3=13;）。最终combiner（组合器）混合了三次的结果，通过两次迭代完成运算（12+13=25; 25+11=36;）。</p>
+<h2 id="collect-方法"><a href="#collect-方法" class="headerlink" title="collect()方法"></a>collect()方法</h2><p>&emsp;&emsp;stream的规约也可以被其他的终结方法执行——collect()。它接收了一个名为collector的参数，此参数注明规约的流程。官方已经创建了预定义的收集器，我们可以在这些收集器的帮助下访问它们。<br>下面我们将看到使用List作为所有stream的来源：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Product&gt; productList = Arrays.asList(new Product(23, &quot;potatoes&quot;),</span><br><span class="line">  new Product(14, &quot;orange&quot;), new Product(13, &quot;lemon&quot;),</span><br><span class="line">  new Product(23, &quot;bread&quot;), new Product(13, &quot;sugar&quot;));</span><br></pre></td></tr></table></figure></p>
+<p>转换一个stream为Collection集合（Collection、List、Set、Queue、etc）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; collectorCollection = </span><br><span class="line">  productList.stream().map(Product::getName).collect(Collectors.toList());</span><br></pre></td></tr></table></figure></p>
+<p>规约为String类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String listToString = productList.stream().map(Product::getName)</span><br><span class="line">  .collect(Collectors.joining(&quot;, &quot;, &quot;[&quot;, &quot;]&quot;));</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;join()方法拥有三个参数（delimiter, prefix, suffix），使用join()最便捷之处在于程序员不需要考虑stream的起始与结束甚至界定符，Collector会考虑到这些的。<br><strong>计算stream中所有数字元素的平均值</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">double averagePrice = productList.stream()</span><br><span class="line">  .collect(Collectors.averagingInt(Product::getPrice));</span><br></pre></td></tr></table></figure></p>
+<p><strong>计算stream中所有数字元素的和</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int summingPrice = productList.stream()</span><br><span class="line">    .collect(Collectors.summingInt(Product::getPrice));</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;方法averagingXX()、summingXX()和summarizingXX()适用于基础数据类型（int,long,double），也适用于它们的封装类（ Integer,Long,Double）。一个很有效的功能技术提供映射，因此开发者也不是一定需要在collect()方法之后使用map()操作才能完成映射的。<br><strong>收集stream元素集的统计信息</strong>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IntSummaryStatistics statistics = productList.stream()</span><br><span class="line">    .collect(Collectors.summarizingInt(Product::getPrice));</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;通过使用IntSummaryStatistics的生成实例，开发者能够通过请求toString()方法创建一个统计报告，结果将是一系列显而易见的结果：IntSummaryStatistics{count=5, sum=86, min=13, average=17,200000, max=23}。通过调用上述方法getCount()、getSum()、getMin()、getAverage()、getMax(),我们也很容易从对象中提取出count、sum、min、average的值，这是因为所有的值均可以从单个管道中获取。</p>
+<p><strong>采用指定方法组合stream中的元素:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, List&lt;Product&gt;&gt; collectorMapOfLists = productList.stream()</span><br><span class="line">  .collect(Collectors.groupingBy(Product::getPrice));</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;此例中stream将根据group规则将所有元素规约成一个map。<br><strong>根据一些描述对stream进行分组:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Product&gt; unmodifiableSet = productList.stream()</span><br><span class="line">  .collect(Collectors.collectingAndThen(Collectors.toSet(),</span><br><span class="line">  Collections::unmodifiableSet));</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;这种相对特殊的情况里，collection将stream转化为一个Set，之后在此基础上创建了一个不可变的Set。</p>
+<p><strong>Custome collector（自定义收集器）:</strong><br>&emsp;&emsp;假若我们因为一些特定的原因需要创建自定义的收集器，那更简介轻快的方法是采用Collection的of()方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Collector&lt;Product, ?, LinkedList&lt;Product&gt;&gt; toLinkedList =</span><br><span class="line">  Collector.of(LinkedList::new, LinkedList::add, </span><br><span class="line">    (first, second) -&gt; &#123; </span><br><span class="line">       first.addAll(second); </span><br><span class="line">       return first; </span><br><span class="line">    &#125;);</span><br><span class="line"> </span><br><span class="line">LinkedList&lt;Product&gt; linkedListOfPersons =</span><br><span class="line">  productList.stream().collect(toLinkedList);</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;在上例中，Collection的实例被规约成了一个LinkedList<person>。</person></p>
+<h1 id="Parallel-Streams-并行流"><a href="#Parallel-Streams-并行流" class="headerlink" title="Parallel Streams - 并行流"></a>Parallel Streams - 并行流</h1><p>&emsp;&emsp;在Java8之前，并行化十分复杂。<a href="http://www.baeldung.com/java-executor-service-tutorial" target="_blank" rel="noopener">ExecutorService</a>和<a href="http://www.baeldung.com/java-fork-join" target="_blank" rel="noopener">FornJoin</a>的出现大大降低了并行开发的复杂度，但它们都无不避免的关注在如何创建一个特征鲜明的executor，以及如何去运行它等等。Java8提倡了一种新的方式用于在函数类型中实现并行化。<br>&emsp;&emsp;API提供并行流用以并行化执行操作。当stream的源是一个数组或者Collection时，在parallelStream()方法的帮助下可以实现并行化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;Product&gt; streamOfCollection = productList.parallelStream();</span><br><span class="line">boolean isParallel = streamOfCollection.isParallel();</span><br><span class="line">boolean bigPrice = streamOfCollection</span><br><span class="line">  .map(product -&gt; product.getPrice() * 12)</span><br><span class="line">  .anyMatch(price -&gt; price &gt; 200);</span><br></pre></td></tr></table></figure></p>
+<p>但如果stream的源不是数组或者集合类型时，parallel()方法就应该被使用了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IntStream intStreamParallel = IntStream.range(1, 150).parallel();</span><br><span class="line">boolean isParallel = intStreamParallel.isParallel();</span><br></pre></td></tr></table></figure></p>
+<p>上例中，Stream API自动使用了ForkJoin框架去完成并行操作。默认情况下，公共线程池将被使用，不会（至少暂时不会）给它单独分配线程。当stream处于并行状态时，应当注意可能产生阻塞的操作，当对时间效率有所追求且操作可并行时应当转换为并行stream（理由是假如某个任务大小远远多于其他任务，那它将更加耗时）。当然啦，并行模式也可以转换回串行模式，只要使用sequential()方法就能做到这点：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IntStream intStreamSequential = intStreamParallel.sequential();</span><br><span class="line">boolean isParallel = intStreamSequential.isParallel();</span><br></pre></td></tr></table></figure></p>
+<h1 id="Conclusions-结论"><a href="#Conclusions-结论" class="headerlink" title="Conclusions - 结论"></a>Conclusions - 结论</h1><p>&emsp;&emsp;Stream API在对链式数据进行操作时体现了其强大性，但也易于理解。它通过引用的方法规约大容量的数据，构建了更健壮的程序，最主要的是提升了项目开发的生产力。<br>&emsp;&emsp;在本文中stream均是未被关闭的（我们没有调用close()方法或者其他的终结操作），但在实际项目中，<strong>不要这样无节制的放纵stream的存在，这将逐步耗尽你的内存，造成内存泄漏程序崩溃的风险</strong>。<br>最后，本文所对应的示例代码你可以在<a href="https://github.com/eugenp/tutorials/tree/master/core-java-8" target="_blank" rel="noopener">github-core-java-8</a>上获取到。祝福你身体健康，编码顺利！</p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><ol>
+<li>自动装箱： 编译器自动为语句进行语法解析，如类型补充等。详见<a href="http://www.cnblogs.com/danne823/archive/2011/04/22/2025332.html" target="_blank" rel="noopener">Java 自动装箱与拆箱(Autoboxing and unboxing)</a></li>
+<li>JAVA NIO： New I/O的简称，与旧式的基于流的I/O方法相对，从名字看，它表示新的一套Java I/O标准。详见<a href="http://www.importnew.com/21341.html" target="_blank" rel="noopener">NIO与AIO</a></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/my-wechat-qcode.png" alt="Yodes Yang wechat" style="width: 200px; max-width: 100%;">
+    <div>扫描二维码与我联系</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+	<br>
+	------ 本文结束 ------
+</div>
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Yodes Yang
+  </li>
+  <li class="post-copyright-title">
+    <strong>文章标题：</strong>
+    翻译 | Java8 Stream API 教程
+  </li>
+  <li class="post-copyright-date">
+    <strong>发布时间：</strong>
+    2018年3月8日 - 15时03分
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://blog.yodes.cn/post/64df.html" title="翻译 | Java8 Stream API 教程">http://blog.yodes.cn/post/64df.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用  许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java基础/" <i="" class="fa fa-tag"> Java基础</a>
+          
+            <a href="/tags/文档翻译/" <i="" class="fa fa-tag"> 文档翻译</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/1a0f.html" rel="next" title="Java8新特性">
+                <i class="fa fa-chevron-left"></i> Java8新特性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/631f.html" rel="prev" title="TF-idf 思想及其Java 实现">
+                TF-idf 思想及其Java 实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="Yodes Yang">
+            
+              <p class="site-author-name" itemprop="name">Yodes Yang</p>
+              <p class="site-description motion-element" itemprop="description">只有先找到自己，世界才能找到你</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+              
+                <a title="小high一下~" rel="alternate" class="mw-harlem_shake_slow wobble shake" href="javascript:shake()"><i class="fa fa-music"></i> High</a>
+
+<script type="text/JavaScript">
+function shake() {
+    var songs = [
+                "http://obs1hwd9g.bkt.clouddn.com/music/mp3/Good%20Time.mp3",
+                "http://obs1hwd9g.bkt.clouddn.com/music/mp3/%E3%83%8F%E3%83%A0%20-%20%E3%83%8F%E3%83%AB%E3%83%8E%E3%82%A6%E3%82%BF.mp3",
+                "http://obs1hwd9g.bkt.clouddn.com/music/mp3/%E5%BE%90%E6%A2%A6%E5%9C%86%20-%20Christmas.mp3",
+                ""
+    ];
+
+    
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+
+    function S() {
+        var e = document.getElementById("audio_element_id");
+        if(e != null){
+            var index = parseInt(e.getAttribute("curSongIndex"));
+            if(index > songs.length - 2) {
+                index = 0;
+            } else {
+                index++;
+            }
+            e.setAttribute("curSongIndex", index);
+            N();
+        }
+
+        e.src = i;
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+
+    function initAudioEle() {
+        var e = document.getElementById("audio_element_id");
+        if(e === null){
+            e = document.createElement("audio");
+            e.setAttribute("class", l);
+            e.setAttribute("curSongIndex", 0);
+            e.id = "audio_element_id";
+            e.loop = false;
+            e.bgcolor = 0;
+            e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h();
+            go();
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        }
+    }
+    
+    initAudioEle();
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+
+    var curSongIndex = parseInt(document.getElementById("audio_element_id").getAttribute("curSongIndex"));
+    var i = songs[curSongIndex];
+    
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+
+    /* harlem-shake-style.css，替换成你的位置，也可以直接使用：//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css */
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+}
+</script>
+              
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Yodeser" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:yodeser@gmail.com" target="_blank" title="E-Mail" rel="external nofollow"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/yang.yodes" target="_blank" title="Facebook" rel="external nofollow"><i class="fa fa-fw fa-facebook"></i>Facebook</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/p/1005055312987720" target="_blank" title="Weibo" rel="external nofollow"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Yearn Links
+              </div>
+              <div class="links-of-blogroll-box">
+                
+                  <span class="links-of-blogroll-item">
+                    <a href="http://stormzhang.com/" title="StormZhang" target="_blank">StormZhang</a>
+                  </span>
+                
+                  <span class="links-of-blogroll-item">
+                    <a href="http://monniya.com/" title="Monniya" target="_blank">Monniya</a>
+                  </span>
+                
+                  <span class="links-of-blogroll-item">
+                    <a href="http://gank.io/" title="Gank.io" target="_blank">Gank.io</a>
+                  </span>
+                
+                  <span class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/guolin_blog" title="guolin" target="_blank">guolin</a>
+                  </span>
+                
+             </div>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建Stream"><span class="nav-number">2.</span> <span class="nav-text">创建Stream</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Empty-Stream-空Stream"><span class="nav-number">2.1.</span> <span class="nav-text">Empty Stream - 空Stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stream-of-Collection-集合Steram"><span class="nav-number">2.2.</span> <span class="nav-text">Stream of Collection - 集合Steram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stream-of-Array-数组Stream"><span class="nav-number">2.3.</span> <span class="nav-text">Stream of Array - 数组Stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stream-builder-构建器"><span class="nav-number">2.4.</span> <span class="nav-text">Stream.builder() - 构建器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stream-generator-生成器"><span class="nav-number">2.5.</span> <span class="nav-text">Stream.generator() - 生成器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stream-iterate-迭代器"><span class="nav-number">2.6.</span> <span class="nav-text">Stream.iterate() - 迭代器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stream-of-Primitives-基元流"><span class="nav-number">2.7.</span> <span class="nav-text">Stream of Primitives - 基元流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stream-of-String-字符串流"><span class="nav-number">2.8.</span> <span class="nav-text">Stream of String - 字符串流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stream-of-File-文件流"><span class="nav-number">2.9.</span> <span class="nav-text">Stream of File - 文件流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Referencing-a-Stream-引用stream"><span class="nav-number">3.</span> <span class="nav-text">Referencing a Stream - 引用stream</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stream-Pipeline-流的管道"><span class="nav-number">4.</span> <span class="nav-text">Stream Pipeline - 流的管道</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lazy-Invocation-懒式调用"><span class="nav-number">5.</span> <span class="nav-text">Lazy Invocation - 懒式调用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Order-of-Execution-执行顺序"><span class="nav-number">6.</span> <span class="nav-text">Order of Execution - 执行顺序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stream-Reduction-流的聚合"><span class="nav-number">7.</span> <span class="nav-text">Stream Reduction - 流的聚合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#reduce-方法"><span class="nav-number">7.1.</span> <span class="nav-text">reduce()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#collect-方法"><span class="nav-number">7.2.</span> <span class="nav-text">collect()方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Parallel-Streams-并行流"><span class="nav-number">8.</span> <span class="nav-text">Parallel Streams - 并行流</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusions-结论"><span class="nav-number">9.</span> <span class="nav-text">Conclusions - 结论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录"><span class="nav-number">10.</span> <span class="nav-text">附录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-gratipay"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yodes Yang</span>
+  
+</div>
+
+
+  
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">Hosted by <a href="https://pages.coding.me" style="font-weight:bold">Coding Pages</a><span class="post-meta-divider">|</span><a href="http://www.miitbeian.gov.cn" target="_blank">湘ICP备17014086号</a></div>
+
+
+        
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  
+    
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">37k</span>
+  
+
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      个访问者
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    <!-- 爆炸效果 -->
+    
+      <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas> 
+      <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+      <script type="text/javascript" src="/js/src/fireworks.js"></script>
+    
+
+    <!-- 页面点击小红心 -->
+    
+      <script type="text/javascript" src="/js/src/love.js"></script>
+    
+
+    
+      <div class="side-buttons">
+  <div class="side-buttons-box mobile_code">
+    <span class="bt-left"><i class="fa fa-mobile-phone fa-2x" title="手机访问"></i></span><span style="font-size:1px;display:inline-block;line-height:16px;clear:both;">扫二维码</span>
+	<div class="code_img"><i></i><img src="/images/qcode_site.png" alt="扫一扫，用手机访问本站"><p>扫一扫，用手机访问本站</p></div>
+  </div>
+  <div class="side-buttons-box mail_box">
+    <a href="mailto:yodeser@gmail.com"><span class="bt-left"><i class="fa fa-envelope-o fa-lg" title="发送邮件"></i></span><span style="font-size:1px;display:inline-block;line-height:16px;clear:both;">发送邮件</span></a>
+  </div>
+</div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.2.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname,
+            owner: 'Yodeser',
+            repo: 'Gitment-blog',
+            
+            lang: "zh-Hans" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1f4c390de476857506ca6eb104dc291b21a9d9d6',
+            
+                client_id: 'a7a8a68e34137711e77f'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+        // ref: https://github.com/ForbesLindesay/unescape-html
+        var unescapeHtml = function(html) {
+          return String(html)
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, '\'')
+            .replace(/&#x3A;/g, ':')
+            // replace all the other &#x; chars
+            .replace(/&#(\d+);/g, function (m, p) { return String.fromCharCode(p); })
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&');
+        };
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                content = unescapeHtml(content);
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=6.2.0"></script>
+
+
+  
+
+  
+  <style>
+      .copy-btn {
+          display: inline-block;
+          padding: 6px 12px;
+          font-size: 13px;
+          font-weight: 700;
+          line-height: 20px;
+          color: #333;
+          white-space: nowrap;
+          vertical-align: middle;
+          cursor: pointer;
+          background-color: #eee;
+          background-image: linear-gradient(#fcfcfc, #eee);
+          border: 1px solid #d5d5d5;
+          border-radius: 3px;
+          user-select: none;
+      }
+
+      .highlight-wrap .copy-btn {
+          transition: opacity .3s ease-in-out;
+          opacity: 0;
+          padding: 2px 6px;
+          position: absolute;
+          right: 4px;
+          top: 8px;
+      }
+
+      .highlight-wrap:hover .copy-btn,
+      .highlight-wrap .copy-btn:focus {
+          opacity: 1
+      }
+
+      .highlight-wrap {
+          position: relative;
+      }
+  </style>
+  <script>
+      $('.highlight').each(function(i, e) {
+          var $wrap = $('<div>').addClass('highlight-wrap')
+          $(e).after($wrap)
+          $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+              var code = $(e.target).parent().find('.code').find('.line').map(function(i, e) {
+                  return $(e).text()
+              }).toArray().join('\n')
+              var ta = document.createElement('textarea')
+              document.body.appendChild(ta)
+              ta.style.position = 'fixed'
+              ta.style.top = 0
+              ta.style.left = 0
+              ta.value = code
+              ta.select()
+              ta.focus()
+              document.execCommand('copy')
+              document.body.removeChild(ta)
+          })).append(e)
+      })
+  </script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-tororo"},"display":{"position":"left","width":110,"height":252},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>
