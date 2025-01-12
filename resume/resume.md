@@ -1,6 +1,6 @@
 # Yodes Yang
 
-**电话:**  (+86) xxxxxxxx
+**电话:**  (+86) xxx
 **求职意向:** 推广搜/大模型
 **邮箱:** yodes@yodes.cn
 
